@@ -1,6 +1,3 @@
-# Plano de Testes de Software
-
-<span style="color:red">Pré-requisitos: <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t9-smartcondo/blob/main/documentos/02-Especifica%C3%A7%C3%A3o%20do%20Projeto.md"> Especificação do Projeto</a></span>, <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t9-smartcondo/blob/main/documentos/04-Projeto%20de%20Interface.md"> Projeto de Interface</a>
 
 ## PLANO DE TESTES –  MÓDULO VISÃO GERAL DO FUNCIONARIO (SmartCondo)
 
@@ -16,70 +13,70 @@
 
 2. Validar todo o funcionamento da página de Visão Geral do Funcionario, assegurando que cada módulo do dashboard esteja operando corretamente e apresentando informações consistentes. A verificação deve contemplar:
 
-Ordem de Serviços: Garantir que cada Ordem de Serviço exiba corretamente:
+- Ordem de Serviços: Garantir que cada Ordem de Serviço exiba corretamente:
 
-Ano e data da solicitação
+- Ano e data da solicitação
 
-Título
+- Título
 
-Categoria
+- Categoria
 
-Status (Aberta, Concluída ou Em andamento)
+- Status (Aberta, Concluída ou Em andamento)
 
-Prioridade (Baixa, Média ou Alta)
+- Prioridade (Baixa, Média ou Alta)
 
-Ação Ver, permitindo abrir os detalhes da OS contendo:
+- Ação Ver, permitindo abrir os detalhes da OS contendo:
 
-Número da OS
+- Número da OS
 
-Prioridade
+- Prioridade
 
-Título
+- Título
 
-Ocorrência vinculada (quando aplicável)
+- Ocorrência vinculada (quando aplicável)
 
-Data sugerida para realização
+- Data sugerida para realização
 
-Responsável pela execução
+- Responsável pela execução
 
-Local da execução
+- Local da execução
 
-Descrição completa
+- Descrição completa
+  
+- Botões Iniciar, Voltar e Concluir
 
-Botões Iniciar, Voltar e Concluir
+- Ocorrências: Verificar o funcionamento dos módulos:
 
-Ocorrências: Verificar o funcionamento dos módulos:
+- Solicitações/Ocorrências abertas
 
-Solicitações/Ocorrências abertas
+- Minhas Ocorrências, com separação entre Pendentes e Resolvidas
 
-Minhas Ocorrências, com separação entre Pendentes e Resolvidas
+- Comunicados: Confirmar que o sistema apresenta corretamente:
 
-Comunicados: Confirmar que o sistema apresenta corretamente:
+- Lista de comunicados recentes
 
-Lista de comunicados recentes
+- Mensagens enviadas e recebidas
 
-Mensagens enviadas e recebidas
+- Funcionalidades Gerais do Dashboard: Assegurar:
 
-Funcionalidades Gerais do Dashboard: Assegurar:
+- Identificação correta do usuário logado
 
-Identificação correta do usuário logado
+- Exibição atualizada de solicitações/ocorrências abertas
 
-Exibição atualizada de solicitações/ocorrências abertas
-
-Persistência e consistência de todos os dados exibidos
+- Persistência e consistência de todos os dados exibidos
 
 
 3. Ambiente de Testes
 
-Ambiente de execução: Localhost (Live Server) ou ambiente de homologação
+- Ambiente de execução: Localhost (Live Server) ou ambiente de homologação
 
-Navegadores utilizados: Chrome versão 140 ou superior, Firefox e Microsoft Edge
+- Navegadores utilizados: Chrome versão 140 ou superior, Firefox e Microsoft Edge
 
-Armazenamento de dados: localStorage e sessionStorage
+- Armazenamento de dados: localStorage e sessionStorage
 
-Arquivos envolvidos: dashboard.html, index.js, auth/logout.js
+- Arquivos envolvidos: dashboard.html, index.js, auth/logout.js
 
-Usuário utilizado nos testes: Funcionário previamente autenticado e armazenado no sessionStorage
+- Usuário utilizado nos testes: Funcionário previamente autenticado e armazenado no sessionStorage
 
 4. Casos de Teste
 
