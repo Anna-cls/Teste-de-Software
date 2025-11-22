@@ -1,210 +1,669 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Plano de Testes de Software</title>
-<style>
-  /* Estilos para simular fundo escuro e visual do plano */
-  body {
-    background-color: #121212;
-    color: #ccc;
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    line-height: 1.6;
-  }
-  h1, h2, h3 {
-    color: #eee;
-  }
-  a {
-    color: #3ea6ff;
-    text-decoration: none;
-  }
-  a:hover {
-    text-decoration: underline;
-  }
-  table {
-    border-collapse: collapse;
-    width: 60%;
-    margin: 15px 0;
-    font-size: 0.95em;
-    color: #ddd;
-  }
-  th, td {
-    border: 1px solid #444;
-    padding: 8px 12px;
-  }
-  th {
-    background-color: #222;
-  }
-  tr:nth-child(even) {
-    background-color: #1c1c1c;
-  }
-  ul {
-    margin: 10px 0 20px 20px;
-  }
-  ul li {
-    margin-bottom: 6px;
-  }
-</style>
-</head>
-<body>
 
-<h1>Plano de Testes de Software</h1>
+## PLANO DE TESTES –  MÓDULO ORDEM DE SERVIÇO (FUNCIONÁRIO) - SmartCondo
 
-<p><strong>Pré-requisitos:</strong> <a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t9-smartcondo/blob/main/documentos/02-Especifica%C3%A7%C3%A3o%20do%20Projeto.md" target="_blank" rel="noopener noreferrer">Especificação do Projeto</a>, 
-<a href="https://github.com/ICEI-PUC-Minas-PMV-ADS/pmv-ads-2025-2-e1-proj-web-t9-smartcon...ade.md" target="_blank" rel="noopener noreferrer">Projeto de Interface</a></p>
+1. Identificação
 
-<h2>PLANO DE TESTES –  MÓDULO VISÃO GERAL DO FUNCIONARIO (SmartCondo)</h2>
+| Item            | Descrição                              |
+| --------------- | ---------------------------------------|
+| **Sistema**     | SmartCondo                             |
+| **Módulo**      | Ordem de Serviço - Perfil Funcionário |
+| **Responsável** | ANNA CLARA                             |
+| **Versão**      | 1.0                                    |
+| **Data**        | 21/11/2025                             |
 
-<h3>1. Identificação</h3>
+---
+
+2. Objetivo
+
+- Identificação do usuário logado, contendo: nome completo, função do usuário e foto cadastrada.
+
+- Listar todas as ordens de serviço atribuídas ao funcionário para acompanhamento e execução.
+  
+- Exibir o status das ordens de serviço de forma clara, com texto e classes visuais padronizadas (Aberta, Em andamento, Concluída).
+
+- Permitir que o funcionário visualize os detalhes completos de uma ordem de serviço, em um modal contendo: Número da O.S, Título, Prioridade, Ocorrência vinculada (se houver), Data sugerida, Descrição e Responsável.
+
+- Permitir que o funcionário atualize o andamento da ordem de serviço, podendo registrar ações realizadas, alterações de status  (concluida, em andamento).
+
+- Persistência do status da OS, mesmo após recarregar o site.
+
+- Impedir que o funcionário edite dados de ordens de serviço concluídas, permitindo apenas visualização.
+
+- Permitir que o funcionário conclua a ordem de serviço, atualizando o status e comunicando automaticamente a ocorrência vinculada (caso exista).
+
+- Garantir que as OS sejam salvas e carregadas pelo LocalStorage.
+
+- Validar que o botão de logout limpe o sessionStorage e redirecione para a tela de login.
+
+- Requisitos para execução dos testes:
+  
+  * Site publicado ou executado em ambiente local (Live Server).
+
+  * Ordens de serviço armazenadas em smartcondo_ordensServico.
+
+  * Funcionários cadastrados em smartcondo_employees.
+
+  * Usuário funcionario logado (sessionStorage.smartcondo_loggedInUser).
+ 
+---
+
+3. Ambiente de Teste
+
+* Ambiente: Localhost (Live Server) ou ambiente de homologação.
+
+* Navegador: Chrome (versão 140+), Firefox, Edge.
+
+* Banco de Dados: localStorage e sessionStorage com dados simulados
+
+* Arquivos: dashboard.html, index.js, script.js
+
+---
+
+4. Casos de Teste
+<table>
+ <tr>
+  <th>Identificação</th>
+  <th>Objetivo</th>
+  <th>Ambiente de Teste</th>
+  <th>Passos</th>
+  <th>Critérios de Êxito</th>
+  <th>Responsável</th>
+ </tr>
+
+ <!-- CT-FUNC-OS-01 -->
+ 
+<tr>
+    <td><strong>CT-FUNC-OS-01 — Identificação do usuário logado</strong><br>RNF-02</td>
+    <td>Validar se, ao acessar o painel do funcionário, são exibidos corretamente o nome, a função e a foto do usuário logado.</td>
+    <td>Web / SessionStorage</td>
+    <td>
+        <ol>
+            <li>Realizar login com um usuário funcionário válido.</li>
+            <li>Acessar o dashboard do funcionário.</li>
+            <li>Verificar a área de identificação do usuário.</li>
+        </ol>
+    </td>
+    <td>O sistema exibe corretamente: nome completo, função do usuário e foto cadastrada, conforme informações do sessionStorage.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-02 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-02 — Listar Ordens de Serviço do funcionário</strong><br>RF-10</td>
+    <td>Validar se o sistema exibe apenas as Ordens de Serviço atribuídas ao funcionário logado.</td>
+    <td>Web / LocalStorage “smartcondo_ordensServico”</td>
+    <td>
+        <ol>
+            <li>Realizar login como funcionário X.</li>
+            <li>Acessar a aba de Ordens de Serviço.</li>
+        </ol>
+    </td>
+    <td>A listagem exibe somente as O.S cujo responsável corresponde ao funcionário logado.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-03 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-03 — Persistência do status da OS</strong><br>RF-11</td>
+    <td>Validar se o status atualizado da Ordem de Serviço permanece salvo após recarregar a página.</td>
+    <td>Web / LocalStorage “smartcondo_ordensServico”</td>
+    <td>
+        <ol>
+            <li>Acessar a aba de Ordens de Serviço.</li>
+            <li>Alterar o status para "Em andamento" ou "Concluída".</li>
+            <li>Atualizar a página.</li>
+        </ol>
+    </td>
+    <td>O status permanece atualizado conforme o valor salvo no LocalStorage.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-04 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-04 — Exibir status padronizado</strong><br>RF-10</td>
+    <td>Verificar se as O.S apresentam os status com texto e classes visuais padronizadas.</td>
+    <td>Web / LocalStorage com O.S em diferentes status</td>
+    <td>
+        <ol>
+            <li>Popular O.S com status: Aberta, Em andamento, Concluída.</li>
+            <li>Acessar a lista de Ordens de Serviço.</li>
+        </ol>
+    </td>
+    <td>Os status aparecem como: “Aberta”, “Em andamento”, “Concluída”.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-05 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-05 — Visualizar detalhes da O.S</strong><br>RF-10</td>
+    <td>Verificar se o modal de detalhes exibe corretamente todas as informações da Ordem de Serviço.</td>
+    <td>Web / LocalStorage “smartcondo_ordensServico”</td>
+    <td>
+        <ol>
+            <li>Acessar a lista de Ordens de Serviço.</li>
+            <li>Clicar em “Ver detalhes”.</li>
+        </ol>
+    </td>
+    <td>O modal exibe número, título, prioridade, data sugerida, categoria, descrição e ocorrência vinculada (se houver).</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-06 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-06 — Editar O.S em andamento</strong><br>RF-11</td>
+    <td>Validar se somente Ordens de Serviço com status “Em andamento” podem ser editadas.</td>
+    <td>Web / LocalStorage com O.S “Em andamento”</td>
+    <td>
+        <ol>
+            <li>Abrir uma OS com status “Em andamento”.</li>
+            <li>Alterar os campos permitidos.</li>
+            <li>Clicar em “Salvar”.</li>
+        </ol>
+    </td>
+    <td>A O.S é atualizada corretamente no LocalStorage.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-07 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-07 — Impedir edição de O.S concluída</strong><br>RF-11</td>
+    <td>Verificar se uma Ordem de Serviço concluída permanece bloqueada para edição.</td>
+    <td>Web / LocalStorage com O.S concluída</td>
+    <td>
+        <ol>
+            <li>Abrir uma OS com status “Concluída”.</li>
+            <li>Tentar editar qualquer campo.</li>
+        </ol>
+    </td>
+    <td>Todos os campos aparecem bloqueados, impedindo alterações.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-08 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-08 — Impedir edição total da O.S pelo funcionário</strong><br>RF-10</td>
+    <td>Validar se o funcionário pode apenas visualizar as Ordens de Serviço, sem editar os campos.</td>
+    <td>Web / LocalStorage “smartcondo_ordensServico”</td>
+    <td>
+        <ol>
+            <li>Abrir uma Ordem de Serviço.</li>
+            <li>Tentar editar qualquer campo da OS.</li>
+        </ol>
+    </td>
+    <td>Todos os campos permanecem bloqueados, permitindo apenas visualizar e usar ações de status (“iniciar, concluir, voltar”).</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-09 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-09 — Concluir Ordem de Serviço</strong><br>RF-11</td>
+    <td>Verificar se o funcionário consegue concluir uma O.S vinculada a uma ocorrência.</td>
+    <td>Web / LocalStorage com ocorrência vinculada</td>
+    <td>
+        <ol>
+            <li>Abrir uma OS com status “Em andamento”.</li>
+            <li>Clicar em “Concluir”.</li>
+        </ol>
+    </td>
+    <td>O status da O.S muda para “Concluída” e a ocorrência vinculada também é atualizada.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-10 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-10 — Atualização automática do status da ocorrência</strong><br>RF-06 / RF-11</td>
+    <td>Confirmar se o status da ocorrência vinculada acompanha automaticamente o status da O.S.</td>
+    <td>Web / LocalStorage sincronizado</td>
+    <td>
+        <ol>
+            <li>Selecionar uma O.S em aberto.</li>
+            <li>Alterar o status da O.S pelo painel do funcionário.</li>
+        </ol>
+    </td>
+    <td>A ocorrência exibida no sistema aparece com o status sincronizado com a O.S.</td>
+    <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OS-11 -->
+
+<tr>
+    <td><strong>CT-FUNC-OS-11 — Logout do Sistema</strong><br>RNF-02</td>
+    <td>Verificar se o botão de logout encerra corretamente a sessão do usuário.</td>
+    <td>Web / SessionStorage ativo</td>
+    <td>
+        <ol>
+            <li>Clicar no botão “Logout”.</li>
+        </ol>
+    </td>
+    <td>O usuário é redirecionado para o login, o SessionStorage é apagado e o dashboard não pode ser acessado pelo botão voltar.</td>
+    <td>Anna Clara</td>
+</tr>
+
+
+## PLANO DE TESTES –  MÓDULO Ocorrência (FUNCIONARIO) - SmartCondo
+
+1. Identificação
+
+| Item            | Descrição                              |
+| --------------- | ---------------------------------------|
+| **Sistema**     | SmartCondo                             |
+| **Módulo**      | Ocorrência - Perfil Funcionario |
+| **Responsável** | ANNA CLARA                             |
+| **Versão**      | 1.0                                    |
+| **Data**        | 21/11/2025                             |
+
+2. Objetivo
+
+- Permitir que o funcionário registre novas ocorrências informando: título, categoria (Elétrica, Hidráulica, Limpeza ou Outro) e descrição.
+
+- Garantir que todos os campos obrigatórios sejam validados antes do envio da ocorrência.
+
+- Enviar a ocorrência registrada diretamente para o síndico, ficando disponível para análise e criação de OS.
+
+- Exibir todas as ocorrências pertencentes ao funcionário, divididas entre em aberto, em andamento e concluídas.
+
+- Exibir informações básicas das ocorrências na listagem: título, status e data de registro.
+
+- Permitir visualizar os detalhes completos de uma ocorrência, sem permitir edição após o envio.
+
+- Impedir qualquer alteração nas ocorrências registradas, permitindo apenas visualização, incluindo seu status.
+
+- Atualizar automaticamente o status das ocorrências conforme o funcionario altera uma ordem de serviço.
+
+- Validar que o botão de logout limpe o sessionStorage e redirecione para a tela de login.
+
+- Requisitos para execução dos testes:
+  
+- Site publicado ou executado em ambiente local (Live Server).
+
+- Ordens de serviço armazenadas em smartcondo_ordensServico.
+
+- HTML contendo o formulário de ocorrência (#formOcorrencia, campos #titulo, #categoria, #descricao)
+
+- Usuário funcionario logado (sessionStorage.smartcondo_loggedInUser).
+
+3. Ambiente de Teste
+
+- Ambiente: Localhost (Live Server) ou ambiente de homologação.
+
+- Navegador: Chrome (versão 140+), Firefox, Edge.
+
+- Banco de Dados: localStorage e sessionStorage com dados simulados
+
+- Arquivos: dashboard.html, index.js, script.js
+
+4. Casos de Teste
 
 <table>
-  <thead>
-    <tr>
-      <th>Item</th>
-      <th>Descrição</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td><strong>Sistema</strong></td><td>SmartCondo</td></tr>
-    <tr><td><strong>Módulo</strong></td><td>VISÃO GERAL DO FUNCIONARIO</td></tr>
-    <tr><td><strong>Responsável</strong></td><td>ANNA CLARA</td></tr>
-    <tr><td><strong>Versão</strong></td><td>1.0</td></tr>
-    <tr><td><strong>Data</strong></td><td>21/11/2025</td></tr>
-  </tbody>
-</table>
+ <tr>
+  <th>Identificação</th>
+  <th>Objetivo</th>
+  <th>Ambiente de Teste</th>
+  <th>Passos</th>
+  <th>Critérios de Êxito</th>
+  <th>Responsável</th>
+ </tr>
 
-<h3>2. Objetivo</h3>
+ <!-- CT-FUNC-OC-01 -->
+ 
+<tr>
+  <td><strong>CT-FUNC-OC-01 — Registrar nova ocorrência</strong><br>RF-OC-01</td>
+  <td>Validar se o funcionário consegue registrar uma nova ocorrência preenchendo todos os campos obrigatórios.</td>
+  <td>Web / LocalStorage ativo (“smartcondo_ocorrencias”)</td>
+  <td>
+    <ol>
+      <li>Acessar a aba “Ocorrências”.</li>
+      <li>Preencher título, categoria e descrição.</li>
+      <li>Clicar em “Enviar Ocorrência”.</li>
+    </ol>
+  </td>
+  <td>A ocorrência é salva no LocalStorage e enviada para a caixa de recebimento do síndico.</td>
+  <td>Anna Clara</td>
+</tr>
 
-<p>Validar todo o funcionamento da página de Visão Geral do Funcionario, assegurando que cada módulo do dashboard esteja operando corretamente e apresentando informações consistentes. A verificação deve contemplar:</p>
+<!-- CT-FUNC-OC-02 -->
 
-<ul>
-<li><strong>Ordem de Serviços:</strong> Garantir que cada Ordem de Serviço exiba corretamente:
-  <ul>
-    <li>Ano e data da solicitação</li>
-    <li>Título</li>
-    <li>Categoria</li>
-    <li>Status (Aberta, Concluída ou Em andamento)</li>
-    <li>Prioridade (Baixa, Média ou Alta)</li>
-    <li>Ação Ver, permitindo abrir os detalhes da OS com:
-      <ul>
-        <li>Número da OS</li>
-        <li>Prioridade</li>
-        <li>Título</li>
-        <li>Ocorrência vinculada (quando aplicável)</li>
-        <li>Data sugerida para realização</li>
-        <li>Responsável pela execução</li>
-        <li>Local da execução</li>
-        <li>Descrição completa</li>
-        <li>Botões Iniciar, Voltar e Concluir</li>
-      </ul>
-    </li>
-  </ul>
-</li>
-<li><strong>Ocorrências:</strong> Verificar o funcionamento dos módulos:
-  <ul>
-    <li>Solicitações/Ocorrências abertas</li>
-    <li>Minhas Ocorrências, com separação entre Pendentes e Resolvidas</li>
-  </ul>
-</li>
-<li><strong>Comunicados:</strong> Confirmar que o sistema apresenta corretamente:
-  <ul>
-    <li>Lista de comunicados recentes</li>
-    <li>Mensagens enviadas e recebidas</li>
-  </ul>
-</li>
-<li><strong>Funcionalidades Gerais do Dashboard:</strong> Assegurar:
-  <ul>
-    <li>Identificação correta do usuário logado</li>
-    <li>Exibição atualizada de solicitações/ocorrências abertas</li>
-    <li>Persistência e consistência de todos os dados exibidos</li>
-  </ul>
-</li>
-</ul>
+<tr>
+  <td><strong>CT-FUNC-OC-02 — Confirmação de envio de ocorrência</strong><br>RF-OC-01</td>
+  <td>Validar se o sistema exibe uma mensagem de confirmação após o envio da ocorrência.</td>
+  <td>Web / Funcionário logado / LocalStorage ativo</td>
+  <td>
+    <ol>
+      <li>Acessar a aba de registro de ocorrências.</li>
+      <li>Preencher os campos obrigatórios e enviar a ocorrência.</li>
+    </ol>
+  </td>
+  <td>Uma mensagem informa ao funcionário que a ocorrência foi enviada com sucesso.</td>
+  <td>Anna Clara</td>
+</tr>
 
-<h3>3. Ambiente de Testes</h3>
+<!-- CT-FUNC-OC-03 -->
 
-<ul>
-  <li>Ambiente de execução: Localhost (Live Server) ou ambiente de homologação</li>
-  <li>Navegadores utilizados: Chrome versão 140 ou superior, Firefox e Microsoft Edge</li>
-  <li>Armazenamento de dados: localStorage e sessionStorage</li>
-  <li>Arquivos envolvidos: dashboard.html, index.js, auth/logout.js</li>
-  <li>Usuário utilizado nos testes: Funcionário previamente autenticado e armazenado no sessionStorage</li>
-</ul>
+<tr>
+  <td><strong>CT-FUNC-OC-03 — Validar campos obrigatórios</strong><br>RF-OC-02</td>
+  <td>Garantir que a ocorrência não seja enviada caso falte título, categoria ou descrição.</td>
+  <td>Web / Formulário de ocorrência</td>
+  <td>
+    <ol>
+      <li>Tentar enviar o formulário de ocorrência deixando algum campo obrigatório vazio.</li>
+    </ol>
+  </td>
+  <td>O sistema impede o envio e exibe a mensagem “preencha este campo”.</td>
+  <td>Anna Clara</td>
+</tr>
 
-<h3>4. Casos de Teste</h3>
+<!-- CT-FUNC-OC-04 -->
+
+<tr>
+  <td><strong>CT-FUNC-OC-04 — Exibir minhas ocorrências</strong><br>RF-OC-03</td>
+  <td>Validar se o sistema exibe corretamente todas as ocorrências enviadas pelo funcionário logado.</td>
+  <td>Web / LocalStorage ativo</td>
+  <td>
+    <ol>
+      <li>Registrar uma ou mais ocorrências.</li>
+      <li>Acessar a aba “Minhas Ocorrências”.</li>
+    </ol>
+  </td>
+  <td>A listagem exibe todas as ocorrências do funcionário com título, status e data registrada.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OC-05 -->
+
+<tr>
+  <td><strong>CT-FUNC-OC-05 — Visualização básica das ocorrências</strong><br>RF-OC-03</td>
+  <td>Validar se o funcionário consegue visualizar suas ocorrências no formato de cards com título, data e status.</td>
+  <td>Web / LocalStorage com “smartcondo_ocorrencias”</td>
+  <td>
+    <ol>
+      <li>Acessar a aba “Ocorrências”.</li>
+    </ol>
+  </td>
+  <td>Os cards são exibidos com título, data e status, sem permitir edição ou abertura de detalhes.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OC-06 -->
+
+<tr>
+  <td><strong>CT-FUNC-OC-06 — Impedir edição de ocorrências</strong><br>RF-OC-04</td>
+  <td>Validar que o funcionário não pode editar nenhuma ocorrência já enviada.</td>
+  <td>Web / Ocorrências registradas</td>
+  <td>
+    <ol>
+      <li>Acessar uma ocorrência já registrada.</li>
+      <li>Tentar alterar qualquer campo exibido.</li>
+    </ol>
+  </td>
+  <td>Todos os campos permanecem bloqueados, permitindo apenas visualização.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OC-07 -->
+
+<tr>
+  <td><strong>CT-FUNC-OC-07 — Sincronização de status com a OS</strong><br>RF-OC-05 / RF-OS-11</td>
+  <td>Validar se alterações de status feitas na Ordem de Serviço atualizam automaticamente a ocorrência vinculada.</td>
+  <td>Web / LocalStorage sincronizado</td>
+  <td>
+    <ol>
+      <li>Acessar a aba “Ordem de Serviço”.</li>
+      <li>Alterar o status de uma OS vinculada a uma ocorrência.</li>
+      <li>Acessar a aba “Ocorrências”.</li>
+    </ol>
+  </td>
+  <td>O status exibido em “Minhas Ocorrências” reflete a atualização feita na OS.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-OC-08 -->
+
+<tr>
+  <td><strong>CT-FUNC-OC-08 — Logout do sistema</strong><br>RNF-02</td>
+  <td>Verificar se o logout encerra corretamente a sessão do funcionário.</td>
+  <td>Web / SessionStorage</td>
+  <td>
+    <ol>
+      <li>Clicar no botão “Logout”.</li>
+    </ol>
+  </td>
+  <td>O SessionStorage é apagado e o usuário retorna para a tela de login.</td>
+  <td>Anna Clara</td>
+</tr>
+
+
+
+## PLANO DE TESTES –  MÓDULO COMUNICADOS (FUNCIONÁRIO) - SmartCondo
+
+1. Identificação
+
+| Item            | Descrição                              |
+| --------------- | ---------------------------------------|
+| **Sistema**     | SmartCondo                             |
+| **Módulo**      | Comunicados - Perfil Funcionário |
+| **Responsável** | ANNA CLARA                             |
+| **Versão**      | 1.0                                    |
+| **Data**        | 21/11/2025                             |
+
+2. Objetivo
+
+- Enviar comunicados contendo título, categoria (Comunicado, Reserva, Segurança, Financeiro, Assembleia, Ocorrência, Evento, Mensagem) e descrição.
+
+- Encaminhar automaticamente o comunicado ao síndico assim que for enviado.
+
+- Listar todas as mensagens enviadas pelo funcionário.
+
+- Listar todas as mensagens recebidas.
+
+- Exibir corretamente as categorias correspondentes na listagem.
+
+- Garantir que os comunicados sejam salvos e carregados pelo LocalStorage.
+
+- Validar campos obrigatórios antes do envio (título, categoria e descrição).
+
+- Garantir que o funcionário só possa visualizar mensagens (sem editar ou excluir).
+
+- Mostrar claramente a origem das mensagens recebidas (ex: “de: Marcos de Souza”).
+
+- Organizar as listagens separando: Solicitações enviadas e Solicitações recebidas
+
+- - Validar que o botão de logout limpe o sessionStorage e redirecione para a tela de login.
+
+3. Ambiente de Teste
+
+- Ambiente: Localhost (Live Server) ou ambiente de homologação.
+
+- Navegador: Chrome (versão 140+), Firefox, Edge.
+
+- Banco de Dados: localStorage e sessionStorage com dados simulados
+
+- Funcionário logado no sistema (sessionStorage.smartcondo_loggedInUser).
+
+- Funcionários cadastrados no LocalStorage: smartcondo_employees
+
+- omunicados e mensagens armazenados em: smartcondo_notifications
+
+- Arquivos: dashboard.html, index.js, script.js, notifications.html
+
+4. Casos de Teste
 
 <table>
-  <thead>
-    <tr>
-      <th>Identificação</th>
-      <th>Objetivo</th>
-      <th>Ambiente de Teste</th>
-      <th>Passos</th>
-      <th>Critérios de Êxito</th>
-      <th>Responsável</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>CT-01 — Exibir nome e cargo do usuário logado</strong></td>
-      <td>Verificar se o nome “Marcos de Souza, Zelador” (usuário padrão de teste do sistema) está sendo exibido corretamente.</td>
-      <td>Web / Funcionário logado / SessionStorage ativo</td>
-      <td><ol><li>Efetuar login como funcionário.</li><li>Acessar a página “Visão Geral”.</li></ol></td>
-      <td>O elemento #usuarioLogado deve exibir: <em>“Marcos de Souza, Funcionário”</em>.</td>
-      <td>Anna Clara</td>
-    </tr>
-    <tr>
-      <td><strong>CT-02 — Exibir Ordem de serviço</strong></td>
-      <td>Validar se o card exibe as (OS) corretamente.</td>
-      <td>Web / LocalStorage com chave "smartcondo_ocorrencias"</td>
-      <td><ol><li>Popular o localStorage com Ocorrências.</li><li>Acessar a página do dashboard.</li></ol></td>
-      <td>O card “Ordem de Serviço” exibe exatamente o total de OS salva em storage.</td>
-      <td>Anna Clara</td>
-    </tr>
-    <tr>
-      <td><strong>CT-03 — Exibir Ocorrências</strong></td>
-      <td>Validar se o card exibe corretamente as minhas ocorrências.</td>
-      <td>Web / LocalStorage chave “smartcondo_ocorrencias”</td>
-      <td><ol><li>Exibir Ocorrências em aberto/concluídas.</li><li>Registrar nova ocorrência</li></ol></td>
-      <td>O card “Ocorrências” exibe a quantidade correta.</td>
-      <td>Anna Clara</td>
-    </tr>
-    <tr>
-      <td><strong>CT-04 — Enviar Comunicados</strong></td>
-      <td>Verificar se os comunicados são mantidas após recarregar a página.</td>
-      <td>Web / LocalStorage com chave “smartcondo_ocorrencias”</td>
-      <td><ol><li>Enviar comunicados com status variados.</li><li>Carregar a página.</li></ol></td>
-      <td>O card deve exibir os comunicados enviados.</td>
-      <td>Anna Clara</td>
-    </tr>
-    <tr>
-      <td><strong>CT-05 — Mensagens recebidas/Enviadas</strong></td>
-      <td>Verificar se as mensagens são mantidas após recarregar a página.</td>
-      <td>Web / LocalStorage com chaves “smartcondo_ocorrencias”</td>
-      <td><ol><li>O card deve exibir as mensagens enviadas e recebidas.</li><li>Carregar a página.</li></ol></td>
-      <td>O card “mensagem recebidas” e “mensagem enviadas” exibir as mensagens enviadas e recebidas apenas.</td>
-      <td>Anna Clara</td>
-    </tr>
-    <tr>
-      <td><strong>CT-10 — Logout do sistema</strong></td>
-      <td>Validar se o botão de logout executa o método logout().</td>
-      <td>Web / SessionStorage ativo</td>
-      <td><ol><li>Clicar no botão de logout.</li></ol></td>
-      <td>O usuário é redirecionado para a página de login e sessionStorage é limpo.</td>
-      <td>Anna Clara</td>
-    </tr>
-  </tbody>
-</table>
+ <tr>
+  <th>Identificação</th>
+  <th>Objetivo</th>
+  <th>Ambiente de Teste</th>
+  <th>Passos</th>
+  <th>Critérios de Êxito</th>
+  <th>Responsável</th>
+ </tr>
 
-<p><strong>Links Úteis:</strong></p>
-<ul>
-  <li><a href="https://www.ibm.com/developerworks/br/local/rational/criacao_geracao_planos_testes_software/index.html" target="_blank" rel="noopener noreferrer">IBM - Criação e Geração de Planos de Teste</a></li>
-  <li><a href="https://blog.onedaytesting.com.br/teste-de-software/" target="_blank" rel="noopener noreferrer">Teste de Software: Conceitos e tipos de testes</a></li>
-  <li><a href="https://geekflare.com/javascript-unit-testing/" target="_blank" rel="noopener noreferrer">Ferramentas de Test para Java Script</a></li>
-  <li><a href="https://uxdesign.cc/ux-user-research-and-user-testing-tools-2d339d379dc7" target="_blank" rel="noopener noreferrer">UX Tools</a></li>
-</ul>
+<!-- CT-FUNC-CO-01 -->
 
-</body>
-</html>
+<tr>
+  <td><strong>CT-FUNC-CO-01 — Enviar comunicado</strong><br>RF-CO-01</td>
+  <td>Validar se o funcionário consegue enviar um comunicado preenchendo título, categoria e descrição.</td>
+  <td>Web / Funcionário logado / LocalStorage com “smartcondo_notifications”</td>
+  <td>
+    <ol>
+      <li>Acessar a aba Comunicados do funcionário.</li>
+      <li>Preencher título, categoria e descrição.</li>
+      <li>Clicar em “Enviar comunicado”.</li>
+    </ol>
+  </td>
+  <td>O comunicado é enviado e aparece imediatamente na lista de “Mensagens enviadas”.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-02 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-02 — Validação de campos obrigatórios</strong><br>RF-CO-02</td>
+  <td>Garantir que o sistema impeça o envio de comunicados sem título, categoria ou descrição.</td>
+  <td>Web / Formulário de comunicados</td>
+  <td>
+    <ol>
+      <li>Acessar a aba Comunicados.</li>
+      <li>Tentar enviar o formulário vazio ou faltando algum campo.</li>
+    </ol>
+  </td>
+  <td>O sistema exibe mensagem de erro e bloqueia o envio.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-03 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-03 — Encaminhamento automático ao síndico</strong><br>RF-CO-03</td>
+  <td>Verificar se o comunicado enviado pelo funcionário vai automaticamente para a caixa do síndico.</td>
+  <td>Web / LocalStorage sincronizado</td>
+  <td>
+    <ol>
+      <li>Enviar um comunicado.</li>
+      <li>Acessar o painel do síndico.</li>
+    </ol>
+  </td>
+  <td>O comunicado aparece em “Solicitações recebidas” do síndico.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-04 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-04 — Listar comunicados enviados</strong><br>RF-CO-04</td>
+  <td>Validar se todos os comunicados enviados aparecem na seção “Mensagens enviadas”.</td>
+  <td>Web / LocalStorage com notificações salvas</td>
+  <td>
+    <ol>
+      <li>Enviar um ou mais comunicados.</li>
+      <li>Abrir a aba de mensagens enviadas.</li>
+    </ol>
+  </td>
+  <td>A listagem exibe corretamente todos os comunicados enviados.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-05 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-05 — Listar comunicados recebidos</strong><br>RF-CO-05</td>
+  <td>Verificar se comunicados enviados pelo síndico aparecem na aba “Mensagens recebidas”.</td>
+  <td>Web / LocalStorage com notificações</td>
+  <td>
+    <ol>
+      <li>Simular comunicado enviado pelo síndico.</li>
+      <li>Acessar a seção de mensagens recebidas.</li>
+    </ol>
+  </td>
+  <td>O comunicado aparece corretamente, incluindo remetente e categoria.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-06 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-06 — Exibição correta das categorias</strong><br>RF-CO-06</td>
+  <td>Garantir que cada comunicado exiba o ícone correto conforme a categoria selecionada.</td>
+  <td>Web / Lista de comunicados</td>
+  <td>
+    <ol>
+      <li>Enviar comunicados com categorias diferentes.</li>
+      <li>Verificar os ícones exibidos na listagem.</li>
+    </ol>
+  </td>
+  <td>As categorias são exibidas com seus ícones correspondentes.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-07 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-07 — Persistência dos comunicados</strong><br>RNF-CO-01</td>
+  <td>Validar se os comunicados permanecem visíveis após recarregar a página.</td>
+  <td>Web / Reload da página</td>
+  <td>
+    <ol>
+      <li>Enviar um comunicado.</li>
+      <li>Recarregar a página.</li>
+    </ol>
+  </td>
+  <td>O comunicado continua listado conforme armazenado no LocalStorage.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-08 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-08 — Marcar como lido</strong><br>RF-CO-07</td>
+  <td>Verificar se o funcionário pode marcar mensagens recebidas como lidas.</td>
+  <td>Web / LocalStorage</td>
+  <td>
+    <ol>
+      <li>Abrir a aba de recebidas.</li>
+      <li>Clicar em “Marcar como lida”.</li>
+    </ol>
+  </td>
+  <td>O ícone muda para um check verde e o estado fica salvo no LocalStorage.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-09 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-09 — Restrições de edição</strong><br>RF-CO-08</td>
+  <td>Confirmar que o funcionário não pode editar ou excluir comunicados.</td>
+  <td>Web / Funcionário logado</td>
+  <td>
+    <ol>
+      <li>Acessar qualquer comunicado enviado.</li>
+      <li>Verificar as ações disponíveis.</li>
+    </ol>
+  </td>
+  <td>Somente é possível visualizar; não há opções de edição ou exclusão.</td>
+  <td>Anna Clara</td>
+</tr>
+
+<!-- CT-FUNC-CO-10 -->
+
+<tr>
+  <td><strong>CT-FUNC-CO-10 — Separação de mensagens</strong><br>RF-CO-09</td>
+  <td>Validar a organização entre “Mensagens enviadas” e “Mensagens recebidas”.</td>
+  <td>Web / Listas de comunicados</td>
+  <td>
+    <ol>
+      <li>Enviar um comunicado.</li>
+      <li>Receber um comunicado.</li>
+      <li>Verificar cada aba.</li>
+    </ol>
+  </td>
+  <td>Cada comunicado aparece corretamente na sua respectiva aba sem mistura.</td>
+  <td>Anna Clara</td>
+</tr>
